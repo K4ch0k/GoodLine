@@ -1,0 +1,53 @@
+﻿<Page x:Class="Rasxod.Pages.TableExpenses"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Rasxod.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="TableExpenses" Background="#FFA5BD98">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="180"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <Label Content="Навигационное меню" Style="{StaticResource AllLabel}" Width="auto"/>
+            <Button Name="AddExp" Content="Добавить расход" Click="AddExp_Click" Style="{StaticResource AllButton}" Width="auto"/>
+            <Button Name="AddExpName" Click="AddExpName_Click" Style="{StaticResource AllButton}" Width="auto" Height="auto">
+                <TextBlock Text="Добавить название расхода" TextWrapping="Wrap" TextAlignment="Center"/>
+            </Button>
+            <StackPanel>
+                <Label Content="Сумма расходов:" Style="{StaticResource AllLabel}" Width="auto"/>
+                <Label Content="{Binding Sum}" Style="{StaticResource AllLabel}" Width="auto"/>
+            </StackPanel>
+            <StackPanel>
+                <Label Content="Кол-во записей:" Style="{StaticResource AllLabel}" Width="auto"/>
+                <Label Content="{Binding CountItem}" Style="{StaticResource AllLabel}" Width="auto"/>
+            </StackPanel>
+        </StackPanel>
+            
+
+            <DataGrid Name="MainTable" ItemsSource="{Binding AllExp}"  Grid.Column="1" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Наименование" Binding="{Binding NameExp1.NameExpenses}"/>
+                <DataGridTextColumn Header="Категория" Binding="{Binding NameExp1.Categories.Name}"/>
+                <DataGridTextColumn Header="Дата" Binding="{Binding DateExps, StringFormat=\{0:dd.MM.yyyy\} }"/>
+                <DataGridTextColumn Header="Сумма" Binding="{Binding Summ, StringFormat=\{0:f2\}}"/>
+                <DataGridTemplateColumn Header="Действие">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Name="Edit" Content="Редактировать" Click="Edit_Click"/>
+                                <Button Name="Delete" Content="Удалить" Click="Delete_Click"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</Page>

@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ExpensesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Categories">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="NameExp" Relationship="Self.FK_NameExp_Categories" FromRole="Categories" ToRole="NameExp" />
+  </EntityType>
+  <EntityType Name="Expnss">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="NameExp" Type="Int32" Nullable="false" />
+    <Property Name="Summ" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="DateExps" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="NameExp1" Relationship="Self.FK_Expnss_NameExp" FromRole="Expnss" ToRole="NameExp" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Expnss_Users" FromRole="Expnss" ToRole="Users" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="NameExp">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NameExpenses" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Category" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Categories" Relationship="Self.FK_NameExp_Categories" FromRole="NameExp" ToRole="Categories" />
+    <NavigationProperty Name="Expnss" Relationship="Self.FK_Expnss_NameExp" FromRole="NameExp" ToRole="Expnss" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Expnss" Relationship="Self.FK_Expnss_Users" FromRole="Users" ToRole="Expnss" />
+  </EntityType>
+  <Association Name="FK_NameExp_Categories">
+    <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+    <End Role="NameExp" Type="Self.NameExp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="NameExp">
+        <PropertyRef Name="Category" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Expnss_NameExp">
+    <End Role="NameExp" Type="Self.NameExp" Multiplicity="1" />
+    <End Role="Expnss" Type="Self.Expnss" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NameExp">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Expnss">
+        <PropertyRef Name="NameExp" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Expnss_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Expnss" Type="Self.Expnss" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Expnss">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MainEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Categories" EntityType="Self.Categories" />
+    <EntitySet Name="Expnss" EntityType="Self.Expnss" />
+    <EntitySet Name="NameExp" EntityType="Self.NameExp" />
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <AssociationSet Name="FK_NameExp_Categories" Association="Self.FK_NameExp_Categories">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="NameExp" EntitySet="NameExp" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Expnss_NameExp" Association="Self.FK_Expnss_NameExp">
+      <End Role="NameExp" EntitySet="NameExp" />
+      <End Role="Expnss" EntitySet="Expnss" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Expnss_Users" Association="Self.FK_Expnss_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Expnss" EntitySet="Expnss" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

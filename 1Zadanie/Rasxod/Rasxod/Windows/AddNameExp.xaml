@@ -1,0 +1,30 @@
+﻿<Window x:Class="Rasxod.Windows.AddNameExp"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Rasxod.Windows"
+        mc:Ignorable="d"
+        Title="AddNameExp" Height="165" Width="410" ResizeMode="NoResize" Background="#FFA5BD98">
+    <Grid>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Наименование расхода:" Style="{StaticResource AllLabel}" Width="190"/>
+                <TextBox Name="NameExpnss" Style="{StaticResource LoginAndPasswordtxtb}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0" >
+                <Label Content="Категория:" Style="{StaticResource AllLabel}" Width="190"/>
+                <ComboBox Name="Category" ItemsSource="{Binding GetCategories}" Width="200">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{Binding Name}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+            <Button Name="SaveNameExp" Content="Сохранить" Click="SaveNameExp_Click" Style="{StaticResource AllButton}" Width="390"/>
+        </StackPanel>
+    </Grid>
+</Window>

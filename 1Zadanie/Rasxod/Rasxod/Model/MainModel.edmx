@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище ExpensesModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Expnss">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="NameExp" Type="int" Nullable="false" />
+          <Property Name="Summ" Type="money" Nullable="false" />
+          <Property Name="DateExps" Type="date" Nullable="false" />
+          <Property Name="Description" Type="text" />
+        </EntityType>
+        <EntityType Name="NameExp">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameExpenses" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Category" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Surname" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Expnss_NameExp">
+          <End Role="NameExp" Type="Self.NameExp" Multiplicity="1" />
+          <End Role="Expnss" Type="Self.Expnss" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NameExp">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Expnss">
+              <PropertyRef Name="NameExp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Expnss_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Expnss" Type="Self.Expnss" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Expnss">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NameExp_Categories">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+          <End Role="NameExp" Type="Self.NameExp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="NameExp">
+              <PropertyRef Name="Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище ExpensesModelContainer">
+          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Expnss" EntityType="Self.Expnss" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NameExp" EntityType="Self.NameExp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Expnss_NameExp" Association="Self.FK_Expnss_NameExp">
+            <End Role="NameExp" EntitySet="NameExp" />
+            <End Role="Expnss" EntitySet="Expnss" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Expnss_Users" Association="Self.FK_Expnss_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Expnss" EntitySet="Expnss" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NameExp_Categories" Association="Self.FK_NameExp_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="NameExp" EntitySet="NameExp" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ExpensesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="NameExp" Relationship="Self.FK_NameExp_Categories" FromRole="Categories" ToRole="NameExp" />
+        </EntityType>
+        <EntityType Name="Expnss">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="NameExp" Type="Int32" Nullable="false" />
+          <Property Name="Summ" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="DateExps" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="NameExp1" Relationship="Self.FK_Expnss_NameExp" FromRole="Expnss" ToRole="NameExp" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Expnss_Users" FromRole="Expnss" ToRole="Users" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="NameExp">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameExpenses" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Category" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Categories" Relationship="Self.FK_NameExp_Categories" FromRole="NameExp" ToRole="Categories" />
+          <NavigationProperty Name="Expnss" Relationship="Self.FK_Expnss_NameExp" FromRole="NameExp" ToRole="Expnss" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Expnss" Relationship="Self.FK_Expnss_Users" FromRole="Users" ToRole="Expnss" />
+        </EntityType>
+        <Association Name="FK_NameExp_Categories">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+          <End Role="NameExp" Type="Self.NameExp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="NameExp">
+              <PropertyRef Name="Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Expnss_NameExp">
+          <End Role="NameExp" Type="Self.NameExp" Multiplicity="1" />
+          <End Role="Expnss" Type="Self.Expnss" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NameExp">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Expnss">
+              <PropertyRef Name="NameExp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Expnss_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Expnss" Type="Self.Expnss" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Expnss">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MainEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categories" EntityType="Self.Categories" />
+          <EntitySet Name="Expnss" EntityType="Self.Expnss" />
+          <EntitySet Name="NameExp" EntityType="Self.NameExp" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK_NameExp_Categories" Association="Self.FK_NameExp_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="NameExp" EntitySet="NameExp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Expnss_NameExp" Association="Self.FK_Expnss_NameExp">
+            <End Role="NameExp" EntitySet="NameExp" />
+            <End Role="Expnss" EntitySet="Expnss" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Expnss_Users" Association="Self.FK_Expnss_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Expnss" EntitySet="Expnss" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ExpensesModelContainer" CdmEntityContainer="MainEntities">
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="ExpensesModel.Categories">
+              <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Expnss">
+            <EntityTypeMapping TypeName="ExpensesModel.Expnss">
+              <MappingFragment StoreEntitySet="Expnss">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="NameExp" ColumnName="NameExp" />
+                <ScalarProperty Name="Summ" ColumnName="Summ" />
+                <ScalarProperty Name="DateExps" ColumnName="DateExps" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NameExp">
+            <EntityTypeMapping TypeName="ExpensesModel.NameExp">
+              <MappingFragment StoreEntitySet="NameExp">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NameExpenses" ColumnName="NameExpenses" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="ExpensesModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
